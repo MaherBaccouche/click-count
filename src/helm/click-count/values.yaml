@@ -5,16 +5,16 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: hamdikh/clickcount
+  tag: xebia
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 8080
 
 ingress:
   enabled: false
