@@ -1,0 +1,31 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: xebia-role
+  namespace: xebia-test
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: xebia-rolebinding
+  namespace: xebia-test
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: xebia-role
+subjects:
+- kind: ServiceAccount
+  name: xebia-sa
+  namespace: xebia-test
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: xebia-test
+  name: xebia-sa
+
