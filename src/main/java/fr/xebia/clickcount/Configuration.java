@@ -10,6 +10,7 @@ public class Configuration {
     public final int redisConnectionTimeout;  //milliseconds
 
     public Configuration() {
+        //TODO Fix Configuration to be more flexible 
         redisHost = "redis";
         redisPort = 6379;
         redisConnectionTimeout = 2000;
