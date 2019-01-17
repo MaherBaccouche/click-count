@@ -23,6 +23,14 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: REDIS_HOST
+            value: {{ .Values.redis.config.url }}
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.redis.config.secret.name }}
+                key: {{ .Values.redis.config.secret.key }} 
           ports:
             - name: http
               containerPort: {{ .Values.service.port }} 
