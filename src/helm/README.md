@@ -22,7 +22,7 @@ $ helm init --tiller-namespace <namespace> --service-account <service-account>
 ### Redis
 
 ```console
-$ helm install --name redis-<env> stable/redis --tiller-namespace <namespace> --namespace <namespace>
+$ helm install --name redis-<env> stable/redis --tiller-namespace <namespace> --namespace <namespace> --set usePassword=false
 ```
 
 ## Installing the Chart
