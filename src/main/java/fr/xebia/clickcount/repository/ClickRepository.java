@@ -28,7 +28,8 @@ public class ClickRepository {
     public ClickRepository(Configuration configuration) {
         Config config = new Config();
         config.useSingleServer().setAddress(String.format("%s:%d", configuration.redisHost, configuration.redisPort));
-
+        
+        //TODO ADD AUTH TO REDIS 
         redisson = Redisson.create(config);
         redisClient = new RedisClient(new NioEventLoopGroup(), NioSocketChannel.class, configuration.redisHost, configuration.redisPort, configuration.redisConnectionTimeout);
     }
