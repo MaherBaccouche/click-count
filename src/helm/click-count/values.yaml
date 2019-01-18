@@ -30,7 +30,7 @@ ingress:
 
 redis:
   config:
-    url: http://redis-staging-master:6379 
+    url: redis 
     secret:
       name: redis-staging
       key: redis-password
