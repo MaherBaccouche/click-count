@@ -10,13 +10,7 @@ pipeline{
               serviceAccount: xebia-sa
               serviceAccountName: xebia-sa
               containers:
-              
-              - name: kubectl
-                image: lachlanevenson/k8s-kubectl
-                command:
-                - cat
-                tty: true
-                
+
               - name: helm
                 image: alpine/helm
                 command:
@@ -26,16 +20,11 @@ pipeline{
                 - name: TILLER_NAMESPACE
                   value: "xebia-test"
             
-              volumes:
-                - name: host-volume
-                  hostPath:
-                    path: /var/run/docker.sock
             """
         }
     }
 
     stages{
-        
         
         stage('Checkout scm'){
             steps{
@@ -43,23 +32,35 @@ pipeline{
             } 
         }
         
-        stage('Kubectl') {
-            
-            steps{
-              container('kubectl') {
-                sh "kubectl get pods"
-              }
-            }
-        }
-        
-        stage('Helm'){
+        stage('Helm - Init'){
             steps{
                 container('helm') {
-                    sh 'helm install --name click-count-${ENVRIONMENT} ${WORKSPACE}/src/helm/click-count'
+                    sh 'helm init -c --service-account xebia-sa'
                 } 
             }
         }
         
+        stage('Helm - Staging'){
+            steps{
+                container('helm') {
+                    sh """
+                    helm delete --purge clickcount-staging
+                    helm install --name clickcount-staging ${WORKSPACE}/src/helm/click-count
+                    """
+                } 
+            }
+        }
+        
+        stage('Helm - PROD'){
+            steps{
+                container('helm') {
+                    sh """
+                    helm delete --purge --tiller-namespace xebia-prod clickcount-production
+                    helm install --tiller-namespace xebia-prod --name clickcount-production ${WORKSPACE}/src/helm/click-count
+                    """
+                } 
+            }
+        }
     }
 
 }
