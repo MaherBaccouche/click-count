@@ -25,9 +25,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: REDIS_HOST
-            value: {{ .Values.redis.config.host }}
+            value: {{ .Values.redis.config.host | quote }}
           - name: REDIS_PORT
-            value: {{ .Values.service.port }}
+            value: {{ .Values.service.port | quote }}
           #- name: REDIS_PASSWORD
           #  valueFrom:
           #    secretKeyRef:
