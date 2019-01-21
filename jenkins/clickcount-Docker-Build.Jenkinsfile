@@ -51,9 +51,9 @@ pipeline{
                   usernameVariable: 'DOCKER_HUB_USER',
                   passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                   sh """
-                    mv ${WORKSPACE}/target/*.war ${WORKSPACE}/src/docker/
+                    mv ${WORKSPACE}/target/*.war ${WORKSPACE}/docker/
                     docker login -u ${DOCKER_HUB_USER} -p "${DOCKER_HUB_PASSWORD}"
-                    docker build -t ${DOCKER_HUB_USER}/clickcount:latest ${WORKSPACE}/src/docker/
+                    docker build -t ${DOCKER_HUB_USER}/clickcount:latest ${WORKSPACE}/docker/
                     docker push ${DOCKER_HUB_USER}/clickcount:latest
                     """
                     }   
