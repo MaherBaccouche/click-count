@@ -55,7 +55,7 @@ pipeline{
             steps{
                 container('helm') {
                     sh """
-                    helm delete --purge --tiller-namespace xebia-prod --namespace xebia-prod clickcount-production
+                    helm delete --purge --tiller-namespace xebia-prod clickcount-production
                     helm install --tiller-namespace xebia-prod --namespace xebia-prod --name clickcount-production ${WORKSPACE}/src/helm/click-count
                     """
                 } 
