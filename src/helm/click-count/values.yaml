@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: hamdikh/clickcount
-  tag: xebia
+  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -30,7 +30,7 @@ ingress:
 
 redis:
   config:
-    url: redis 
+    host: redis 
     secret:
       name: redis-staging
       key: redis-password
