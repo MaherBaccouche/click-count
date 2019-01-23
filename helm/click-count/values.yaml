@@ -30,7 +30,7 @@ ingress:
 
 redis:
   config:
-    host: redis 
+    host: redis-master 
     port: 6379
 
 resources: {}
