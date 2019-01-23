@@ -27,12 +27,7 @@ spec:
           - name: REDIS_HOST
             value: {{ .Values.redis.config.host | quote }}
           - name: REDIS_PORT
-            value: {{ .Values.service.port | quote }}
-          #- name: REDIS_PASSWORD
-          #  valueFrom:
-          #    secretKeyRef:
-          #      name: {{ .Values.redis.config.secret.name }}
-          #      key: {{ .Values.redis.config.secret.key }} 
+            value: {{ .Values.redis.config.port | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }} 
