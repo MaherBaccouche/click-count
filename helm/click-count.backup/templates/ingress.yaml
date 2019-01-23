@@ -1,0 +1,34 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "click-count.fullname" . -}}
+{{- $ingressPaths := .Values.ingress.paths -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app.kubernetes.io/name: {{ include "click-count.name" . }}
+    helm.sh/chart: {{ include "click-count.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.tls.host | quote }}
+      secretName: {{ .secretName }}
+{{- end }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+	{{- range $ingressPaths }}
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: http
+	{{- end }}
+{{- end }}
