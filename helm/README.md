@@ -30,7 +30,7 @@ $ helm install --name redis-<env> stable/redis --tiller-namespace <namespace> --
 To install the chart with the release name `click-count-<env>`:
 
 ```console
-$ helm install --name click-count-<env> . --tiller-namespace <namespace> --set redis.config.url=http://redis-<env>-slave:6379 --set redis.config.secret.name=redis-<env>
+$ helm install --name click-count-<env> . --tiller-namespace <namespace> --set redis.config.host=redis-<env>-[slave|master] --set redis.config.port=6379
 ```
 
 ## Configuration
