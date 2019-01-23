@@ -43,15 +43,7 @@ pipeline{
         stage('Helm - Redis - Staging'){
             steps{
                 container('helm') {
-                    script {
-                        try{
-                          sh 'helm delete --purge redis'
-                        }    
-                        catch (err){
-                           echo "deleting helm chart failed, chart does not exist"
-                        }
-                    }
-                    sh 'helm install --name redis stable/redis --tiller-namespace xebia-test --namespace xebia-test --set usePassword=false'
+                    sh 'helm upgrade --install redis stable/redis --tiller-namespace xebia-test --namespace xebia-test --set usePassword=false'
                 } 
             }
         }
@@ -75,15 +67,7 @@ pipeline{
         stage('Helm - Redis - Production'){
             steps{
                 container('helm') {
-                    script {
-                        try{
-                          sh 'helm delete --purge redis --tiller-namespace xebia-prod'
-                        }    
-                        catch (err){
-                           echo "deleting helm chart failed, chart does not exist"
-                        }
-                    }
-                    sh 'helm install --name redis stable/redis --tiller-namespace xebia-prod --namespace xebia-prod --set usePassword=false'
+                    sh 'helm upgrade --install redis stable/redis --tiller-namespace xebia-prod --namespace xebia-prod --set usePassword=false'
                 } 
             }
         }
