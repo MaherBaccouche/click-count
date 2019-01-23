@@ -43,10 +43,15 @@ pipeline{
         stage('Helm - Staging'){
             steps{
                 container('helm') {
-                    sh """
-                    helm delete --purge clickcount-staging
-                    helm install --name clickcount-staging ${WORKSPACE}/helm/click-count
-                    """
+                    script {
+                        try{
+                          sh 'helm delete --purge clickcount-staging'
+                        }    
+                        catch (err){
+                           echo "deleting helm chart failed, chart does not exist"
+                        }
+                    }
+                    sh 'helm install --name clickcount-staging ${WORKSPACE}/helm/click-count'
                 } 
             }
         }
@@ -54,13 +59,17 @@ pipeline{
         stage('Helm - PROD'){
             steps{
                 container('helm') {
-                    sh """
-                    helm delete --purge --tiller-namespace xebia-prod clickcount-production
-                    helm install --tiller-namespace xebia-prod --namespace xebia-prod --name clickcount-production ${WORKSPACE}/helm/click-count
-                    """
+                    script {
+                        try{
+                          sh 'helm delete --purge --tiller-namespace xebia-prod clickcount-production'
+                        }    
+                        catch (err){
+                           echo "deleting helm chart failed, chart does not exist"
+                        }
+                    }
+                    sh 'helm install --tiller-namespace xebia-prod --namespace xebia-prod --name clickcount-production ${WORKSPACE}/helm/click-count'
                 } 
             }
         }
     }
-
 }
