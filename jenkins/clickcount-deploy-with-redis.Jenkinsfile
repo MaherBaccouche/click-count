@@ -67,7 +67,7 @@ pipeline{
                            echo "deleting helm chart failed, chart does not exist"
                         }
                     }
-                    sh 'helm install --name clickcount-staging ${WORKSPACE}/helm/click-count'
+                    sh 'helm install --name clickcount-staging ${WORKSPACE}/helm/click-count --set ingress.enabled=false'
                 } 
             }
         }
