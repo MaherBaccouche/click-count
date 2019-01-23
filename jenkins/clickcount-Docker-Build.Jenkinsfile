@@ -32,12 +32,22 @@ pipeline{
         }
     }
 
+    environment {
+        workspace = pwd()
+        releaseVersion = ""
+    }
+
     stages{
 
         stage('Build'){
             steps{
                 container('maven') {
                     git url: 'https://github.com/hamdikh/click-count'
+                    script {
+                        def pom = readMavenPom file: 'pom.xml'
+                        releaseVersion = pom.version.toString()
+                        echo "releazse version : ${releaseVersion}"
+                    }
                     sh 'mvn package'
                 } 
             }
@@ -53,8 +63,8 @@ pipeline{
                   sh """
                     mv ${WORKSPACE}/target/*.war ${WORKSPACE}/docker/
                     docker login -u ${DOCKER_HUB_USER} -p "${DOCKER_HUB_PASSWORD}"
-                    docker build -t ${DOCKER_HUB_USER}/clickcount:latest ${WORKSPACE}/docker/
-                    docker push ${DOCKER_HUB_USER}/clickcount:latest
+                    docker build -t ${DOCKER_HUB_USER}/clickcount:${releaseVersion} ${WORKSPACE}/docker/
+                    docker push ${DOCKER_HUB_USER}/clickcount:${releaseVersion}
                     """
                     }   
                 } 
