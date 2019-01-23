@@ -38,7 +38,17 @@ $ helm install --name click-count-<env> . --tiller-namespace <namespace> --set r
 
 |             Parameter             |              Description                 |               Default               |
 |-----------------------------------|------------------------------------------|-------------------------------------|
-| `imagePullSecret`                 | The name of the secret to use if pulling from a private registry | `nil`       |
+| `replicaCount`                    | The number of replicas                   | `1`                                 |
 | `image.pullPolicy`                | Container pull policy                    | `IfNotPresent`                      |
-| `image.repository`                | Container image to use                   | `hamdikh/clickcount`                             |
-| `image.tag`                       | Container image tag to deploy            | `xebia`                            |
+| `image.repository`                | Container image to use                   | `hamdikh/clickcount`                |
+| `image.tag`                       | Container image tag to deploy            | `latest`                            |
+| `service.type`                    | The service type to be generated ( LoadBalencer, NodePort, ClusterIp ..) | `LoadBalencer`       |
+| `service.port`                    | The service port to be used              | `8080`                              |
+| `ingress.enabled`                 | Enables Ingress                          | `true`                              |
+| `ingress.annotations`             | Ingress annotations                      | `{}`                                |
+| `ingress.labels`                  | Custom labels                            | `{}`                                |
+| `ingress.host`                    | Ingress accepted hostname | `clickcount-hkhelil-paas-local.eastus.cloudapp.azure.com` |                                             
+| `ingress.tls.host`          | Ingress TLS accepted hostname   | `clickcount-hkhelil-paas-local.eastus.cloudapp.azure.com` |
+| `redis.config.host`               | Redis accepted hostname/service name     | `redis`                             |
+| `redis.config.port`               | Redis accepted service port              | `6379`                              |
+| `resources`                       | CPU/Memory resource requests/limits      | `{}`                                |
