@@ -31,9 +31,10 @@ ingress:
 redis:
   config:
     host: redis 
-    secret:
-      name: redis-staging
-      key: redis-password
+    port: 6379
+    #secret:
+    #  name: redis-staging
+    #  key: redis-password
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
