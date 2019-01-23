@@ -3,7 +3,7 @@
 To use Jenkins pipelines, you need first of all to have an instance deployed into your K8S cluster, to do so you can use this command:
 
 ```
-
+helm install --name jenkins stable/jenkins --tiller-namespace=<namespace>
 ```
 
 ## Docker Build and deploy
