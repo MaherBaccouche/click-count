@@ -25,6 +25,13 @@ $ helm init --tiller-namespace <namespace> --service-account <service-account>
 $ helm install --name redis-<env> stable/redis --tiller-namespace <namespace> --namespace <namespace> --set usePassword=false
 ```
 
+NOTE: 
+If you have persistant volumes claims already present in your namespace, you mignt need to upgrade the chart instead of installing it normally, so to do so you should use:
+
+```console
+$ helm upgrade --install redis-<env> stable/redis --tiller-namespace <namespace> --namespace <namespace> --set usePassword=false
+```
+
 ## Installing the Chart
 
 To install the chart with the release name `click-count-<env>`:
