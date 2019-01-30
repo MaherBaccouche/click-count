@@ -9,7 +9,7 @@ az aks create -g kubernetes -n hkhelil-k8s --generate-ssh-keys
 ## Get Credentials
 
 ```
-az aks get-credentials --resource-group kubernetes --ame hkhelil-k8s
+az aks get-credentials --resource-group kubernetes --name hkhelil-k8s
 ```
 
 ## Test Kubernetes 
